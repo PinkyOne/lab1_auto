@@ -31,7 +31,7 @@ int vid(VECT *X,VECT *L,double *a,double *d);
 
 
 int ogr_raz(double, double* ,int );
-int t =15,r=0;
+int t =15, r=0;
     double_ operator +(double_ c1, double_ c2)
      {
        double d1,d2,ma;int i;
@@ -198,8 +198,8 @@ int IT(F_real *T,
        F_real *ITResult)
 { F_real T1,R;
  T1=(*T)/100.0;
- R=(0.24242+T1*(-0.24746e-2+T1*(0.52835e-3+T1*(-0.24661e-4+T1*0.3869e-6))))/(1.0-exp((-1)*(T1.a-10.101)*(T1.a-10.101)));
-  *ITResult=(*T)*R;
+ R=(0.24242+T1*(-0.24746e-2+T1*(0.52835e-3+T1*(-0.24661e-4+T1*0.3869e-6))));
+ *ITResult=(*T)*R;
  return 1;
 }
 
@@ -212,7 +212,7 @@ int AIT(F_real *TA,
 F_real T100,AB,A1,R,B;
 T100=(*TA)/100.0;
 IT(TA,&AB);
-     R=.24303+T100*(.41667E-3+T100*(.36978E-3+T100*(-.1887E-4+T100*.29886E-6)));
+R=(.24303+T100*(.41667E-3+T100*(.36978E-3+T100*(-.1887E-4+T100*.29886E-6))));
      A1=(*TA)*R;
      B=(1.0+(*Z0))/(1.0+(*AL)*(*Z0));
      *AITResult=(1-B)*AB+B*A1;
@@ -224,9 +224,10 @@ int RCKM(F_real *A,
 	    F_real *XK,
 	    F_real *XM)
 {F_real Z0,AITResult1,AITResult2;
- F_real T10;
- T10=(*T)+10.0;
- *R=( (1.0-1.0/(*A)) * 29.27 + (1.0/(*A)/14.78+1.0/(*A))*29.35 ) / (1.0+1.0/(*A)/14.78);
+ F_real T10,A1;
+ T10=(*T)+10.0;A1=(*A);
+ A1=(A1-0.0296733)*(A1-0.0296733);
+ *R=(( (1.0-1.0/(*A)) * 29.27 + (1.0/(*A)/14.78+1.0/(*A))*29.35 ) / (1.0+1.0/(*A)/14.78))/(1.0-exp((-1)*A1.a));
  Z0=14.78;
  AIT(&T10,A,&Z0,&AITResult1);
  AIT(T,   A,&Z0,&AITResult2);
@@ -250,8 +251,8 @@ int QLAM(F_real *XL,
   return 1;
 }
 
-/*
 
+/*
    void main()
    {
    int i=0;
@@ -262,5 +263,4 @@ int QLAM(F_real *XL,
    bool2(&a,&d);
 
    }
-
 */
